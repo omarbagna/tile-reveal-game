@@ -226,7 +226,7 @@ const Grid = ({ imagesData }) => {
 	const [tiles, setTiles] = React.useState(imagesData);
 	const [firstTile, setFirstTile] = React.useState(null);
 	const [flips, setFlips] = React.useState(0);
-	const [difficulty, setDifficulty] = React.useState(0);
+	const [difficulty, setDifficulty] = React.useState(null);
 	const [gameComplete, setGameComplete] = React.useState(false);
 
 	const handleTileClick = (tile) => {
@@ -285,28 +285,47 @@ const Grid = ({ imagesData }) => {
 	return (
 		<div className="w-50 text-center ">
 			<h1 className="w-100 text-center">Tile Reveal Game</h1>
-			{difficulty !== 0 ? (
+			{difficulty !== null ? (
 				<div className="w-100 text-center d-flex justify-content-center align-items-center gap-2">
-					<h4>Flip Count</h4>{' '}
-					<h5>
-						<span className="badge rounded-pill text-bg-dark">
-							{' '}
-							{flips}/{difficulty}
-						</span>
-					</h5>
+					<div className="text-center d-flex justify-content-center align-items-center gap-2">
+						<h4>Flip Count</h4>{' '}
+						<h5>
+							<span className="badge rounded-pill text-bg-dark">
+								{' '}
+								{flips}/{difficulty.maxFlips}
+							</span>
+						</h5>
+					</div>
+					<div className="text-center d-flex justify-content-center align-items-center gap-2">
+						<h4>Difficulty</h4>{' '}
+						<h5>
+							<span
+								className={`badge rounded-pill ${
+									difficulty.level === 'easy'
+										? 'text-bg-success'
+										: difficulty.level === 'medium'
+										? 'text-bg-warning'
+										: 'text-bg-danger'
+								}`}>
+								{difficulty.level}
+							</span>
+						</h5>
+					</div>
 				</div>
 			) : null}
 
-			{(difficulty !== 0 && flips > difficulty) ||
-			(!gameComplete && difficulty !== 0 && flips === difficulty) ? (
+			{(difficulty !== null && flips > difficulty.maxFlips) ||
+			(!gameComplete &&
+				difficulty !== null &&
+				flips === difficulty.maxFlips) ? (
 				<GameOver />
 			) : null}
 
-			{gameComplete || (gameComplete && flips === difficulty) ? (
+			{gameComplete || (gameComplete && flips === difficulty.maxFlips) ? (
 				<NewGame flips={flips} />
 			) : null}
 
-			{difficulty !== 0 ? (
+			{difficulty !== null ? (
 				<div className="row row-cols-4 gap-3 justify-content-center">
 					{tiles.map((imageObject) => (
 						<GridTile
@@ -325,19 +344,24 @@ const Grid = ({ imagesData }) => {
 						<button
 							type="button"
 							className="btn btn-success"
-							onClick={() => setDifficulty(40)}>
+							onClick={() =>
+								setDifficulty({
+									level: 'easy',
+									maxFlips: 40,
+								})
+							}>
 							Easy
 						</button>
 						<button
 							type="button"
 							className="btn btn-warning"
-							onClick={() => setDifficulty(30)}>
+							onClick={() => setDifficulty({ level: 'medium', maxFlips: 30 })}>
 							Medium
 						</button>
 						<button
 							type="button"
 							className="btn btn-danger"
-							onClick={() => setDifficulty(20)}>
+							onClick={() => setDifficulty({ level: 'hard', maxFlips: 20 })}>
 							Hard
 						</button>
 					</div>
