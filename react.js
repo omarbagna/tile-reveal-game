@@ -178,6 +178,50 @@ const GridTile = ({ tileImage, handleTileClick, reveal, clicked }) => {
 	);
 };
 
+const GameOver = () => {
+	return (
+		<div
+			className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
+			style={{
+				backgroundColor: 'rgba(0,0,0,0.5)',
+				backdropFilter: 'blur(10px)',
+			}}>
+			<h1 className="text-danger" style={{ fontSize: '70px' }}>
+				Game Over!
+			</h1>
+			<h3 className="text-light">Flip limit exceeded for this round</h3>
+			<button
+				type="button"
+				className="btn btn-dark"
+				onClick={() => window.location.reload()}>
+				Try again
+			</button>
+		</div>
+	);
+};
+
+const NewGame = ({ flips }) => {
+	return (
+		<div
+			className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
+			style={{
+				backgroundColor: 'rgba(0,0,0,0.5)',
+				backdropFilter: 'blur(10px)',
+			}}>
+			<h1 className="text-success" style={{ fontSize: '70px' }}>
+				Game Won
+			</h1>
+			<h3 className="text-light">You completed the game in {flips} flips</h3>
+			<button
+				type="button"
+				className="btn btn-success"
+				onClick={() => window.location.reload()}>
+				Start a new game
+			</button>
+		</div>
+	);
+};
+
 const Grid = ({ imagesData }) => {
 	const [tiles, setTiles] = React.useState(imagesData);
 	const [firstTile, setFirstTile] = React.useState(null);
@@ -255,45 +299,11 @@ const Grid = ({ imagesData }) => {
 
 			{(difficulty !== 0 && flips > difficulty) ||
 			(!gameComplete && difficulty !== 0 && flips === difficulty) ? (
-				<div
-					className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
-					style={{
-						backgroundColor: 'rgba(0,0,0,0.5)',
-						backdropFilter: 'blur(10px)',
-					}}>
-					<h1 className="text-danger" style={{ fontSize: '70px' }}>
-						Game Over!
-					</h1>
-					<h3 className="text-light">Flip limit exceeded for this round</h3>
-					<button
-						type="button"
-						className="btn btn-dark"
-						onClick={() => window.location.reload()}>
-						Try again
-					</button>
-				</div>
+				<GameOver />
 			) : null}
 
 			{gameComplete || (gameComplete && flips === difficulty) ? (
-				<div
-					className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
-					style={{
-						backgroundColor: 'rgba(0,0,0,0.5)',
-						backdropFilter: 'blur(10px)',
-					}}>
-					<h1 className="text-success" style={{ fontSize: '70px' }}>
-						Game Won
-					</h1>
-					<h3 className="text-light">
-						You completed the game in {flips} flips
-					</h3>
-					<button
-						type="button"
-						className="btn btn-success"
-						onClick={() => window.location.reload()}>
-						Start a new game
-					</button>
-				</div>
+				<NewGame flips={flips} />
 			) : null}
 
 			{difficulty !== 0 ? (
