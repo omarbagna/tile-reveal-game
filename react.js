@@ -156,7 +156,7 @@ const GridTile = ({ tileImage, handleTileClick, reveal, clicked }) => {
 		<div
 			className={`col overflow-hidden border ${
 				reveal
-					? 'border-primary-subtle border-2'
+					? 'border-success-subtle border-2'
 					: tileImage.inCorrect
 					? 'border-danger-subtle border-2'
 					: tileImage.correct
@@ -232,41 +232,52 @@ const Grid = ({ imagesData }) => {
 	const handleTileClick = (tile) => {
 		setFlips((prev) => prev + 1);
 		let tileIndex = tiles.findIndex((item) => item._id === tile._id);
-		let allTiles = [...tiles];
+
 		if (!firstTile) {
 			setFirstTile(tile);
 
-			allTiles[tileIndex].reveal = true;
-			allTiles[tileIndex].clicked = true;
-			setTiles(allTiles);
+			setTiles((prev) => {
+				prev[tileIndex].reveal = true;
+				prev[tileIndex].clicked = true;
+				return prev;
+			});
 		} else {
 			let firstTileIndex = tiles.findIndex(
 				(item) => item._id === firstTile._id
 			);
 
 			if (firstTile.matcher === tile.matcher) {
-				allTiles[tileIndex].correct = true;
-				allTiles[tileIndex].reveal = true;
-				allTiles[tileIndex].clicked = true;
-				allTiles[firstTileIndex].reveal = true;
-				allTiles[firstTileIndex].clicked = true;
-				allTiles[firstTileIndex].correct = true;
-				setTiles(allTiles);
+				setTiles((prev) => {
+					prev[tileIndex].reveal = true;
+					prev[tileIndex].clicked = true;
+					prev[tileIndex].correct = true;
+					prev[firstTileIndex].reveal = true;
+					prev[firstTileIndex].clicked = true;
+					prev[firstTileIndex].correct = true;
+					return prev;
+				});
 				setFirstTile(null);
 			} else {
-				allTiles[tileIndex].reveal = true;
-				allTiles[tileIndex].clicked = true;
-				allTiles[tileIndex].inCorrect = true;
-				setTiles(allTiles);
+				setTiles((prev) => {
+					prev[tileIndex].reveal = true;
+					prev[tileIndex].clicked = true;
+					prev[tileIndex].inCorrect = true;
+					prev[firstTileIndex].reveal = true;
+					prev[firstTileIndex].clicked = true;
+					prev[firstTileIndex].inCorrect = true;
+					return prev;
+				});
 
 				setTimeout(() => {
-					allTiles[firstTileIndex].reveal = false;
-					allTiles[firstTileIndex].clicked = false;
-					allTiles[firstTileIndex].inCorrect = false;
-					allTiles[tileIndex].reveal = false;
-					allTiles[tileIndex].clicked = false;
-					allTiles[tileIndex].inCorrect = false;
-					setTiles(allTiles);
+					setTiles((prev) => {
+						prev[tileIndex].reveal = false;
+						prev[tileIndex].clicked = false;
+						prev[tileIndex].inCorrect = false;
+						prev[firstTileIndex].reveal = false;
+						prev[firstTileIndex].clicked = false;
+						prev[firstTileIndex].inCorrect = false;
+						return prev;
+					});
 					setFirstTile(null);
 				}, 500);
 			}
