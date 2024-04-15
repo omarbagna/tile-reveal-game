@@ -231,8 +231,6 @@ const Grid = ({ imagesData }) => {
 
 	const checkGameComplete = () => {
 		let complete = tiles.every((tile) => tile.correct === true);
-		console.log(tiles);
-		console.log(complete);
 		setGameComplete(complete);
 	};
 
@@ -255,7 +253,8 @@ const Grid = ({ imagesData }) => {
 				</div>
 			) : null}
 
-			{difficulty !== 0 && flips > difficulty ? (
+			{(difficulty !== 0 && flips > difficulty) ||
+			(!gameComplete && flips === difficulty) ? (
 				<div
 					className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
 					style={{
@@ -275,7 +274,7 @@ const Grid = ({ imagesData }) => {
 				</div>
 			) : null}
 
-			{gameComplete ? (
+			{gameComplete || (gameComplete && flips === difficulty) ? (
 				<div
 					className="position-fixed top-0 start-0 d-flex flex-column justify-content-center align-items-center gap-3 w-100 h-100"
 					style={{
