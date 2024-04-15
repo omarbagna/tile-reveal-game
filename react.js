@@ -286,7 +286,7 @@ const Grid = ({ imagesData }) => {
 		<div className="w-50 text-center ">
 			<h1 className="w-100 text-center">Tile Reveal Game</h1>
 			{difficulty !== null ? (
-				<div className="w-100 text-center d-flex justify-content-center align-items-center gap-2">
+				<div className="w-100 text-center d-flex justify-content-center align-items-center gap-4">
 					<div className="text-center d-flex justify-content-center align-items-center gap-2">
 						<h4>Flip Count</h4>{' '}
 						<h5>
@@ -296,21 +296,18 @@ const Grid = ({ imagesData }) => {
 							</span>
 						</h5>
 					</div>
-					<div className="text-center d-flex justify-content-center align-items-center gap-2">
-						<h4>Difficulty</h4>{' '}
-						<h5>
-							<span
-								className={`badge rounded-pill ${
-									difficulty.level === 'easy'
-										? 'text-bg-success'
-										: difficulty.level === 'medium'
-										? 'text-bg-warning'
-										: 'text-bg-danger'
-								}`}>
-								{difficulty.level}
-							</span>
-						</h5>
-					</div>
+					<h4>
+						<span
+							className={`badge rounded-pill text-capitalize ${
+								difficulty.level === 'easy'
+									? 'text-bg-success'
+									: difficulty.level === 'medium'
+									? 'text-bg-warning'
+									: 'text-bg-danger'
+							}`}>
+							{difficulty.level}
+						</span>
+					</h4>
 				</div>
 			) : null}
 
