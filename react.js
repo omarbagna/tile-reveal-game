@@ -286,7 +286,7 @@ const Grid = ({ imagesData }) => {
 		<div className="w-50 text-center ">
 			<h1 className="w-100 text-center">Tile Reveal Game</h1>
 			{difficulty !== null ? (
-				<div className="w-100 text-center d-flex justify-content-center align-items-center gap-4">
+				<div className="w-100 text-center d-flex justify-content-center align-items-center gap-4 mb-3">
 					<div className="text-center d-flex justify-content-center align-items-center gap-2">
 						<h4>Flip Count</h4>{' '}
 						<h5>
