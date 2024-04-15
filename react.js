@@ -224,7 +224,7 @@ const Grid = ({ imagesData }) => {
 					allTiles[tileIndex].inCorrect = false;
 					setTiles(allTiles);
 					setFirstTile(null);
-				}, 500);
+				}, 1500);
 			}
 		}
 	};
